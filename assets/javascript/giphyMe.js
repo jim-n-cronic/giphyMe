@@ -6,7 +6,7 @@ var gifs = ["trump", "dave chappelle", "elmer fudd", "bugs bunny"];
     function displayGifs() {
     
     var gif = $(this).attr("data-gif");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif +" &api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&apikey=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
 
     $.ajax({
         url: queryURL,
@@ -17,7 +17,9 @@ var gifs = ["trump", "dave chappelle", "elmer fudd", "bugs bunny"];
         console.log(gifs);
         
        var results = response.data;
-       for (var i = 0; i < response.length; i++) {
+
+       for (var i = 0; i < results.length; i++) {
+           console.log("jhkjh")
            if(results[i].rating !== "r" && results[i].rating !== "pg-13") {
                var gifDiv = $("<div>");
                var rating = results[i].rating;
@@ -27,8 +29,9 @@ var gifs = ["trump", "dave chappelle", "elmer fudd", "bugs bunny"];
                gifImage.attr("src", results[i].images.fixed_height.url);
                gifDiv.append(p);
                gifDiv.append(gifImage);
-
+               
                $("#gifs-view").prepend(gifDiv);
+               console.log(response);
            }
        }
     });
@@ -36,6 +39,7 @@ var gifs = ["trump", "dave chappelle", "elmer fudd", "bugs bunny"];
 
     function renderButtomns() {
         $("#buttons-view").empty();
+        $("#gif-input").val("");
 
         for (var i = 0; i < gifs.length; i++) {
            
@@ -74,5 +78,19 @@ var gifs = ["trump", "dave chappelle", "elmer fudd", "bugs bunny"];
     //call on renderbuttons fucntion
     renderButtomns();
 
+    //function that handles pause and play of gifs
+    //** set up f(n) for pausing gifs */
+    $(".gif").on('click', function(pause) {
+       /*
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this.attr("data-state", "animate"));
+        } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-still", "still");
+        }
+        */
+    })
 
 })
