@@ -19,78 +19,116 @@ var gifs = ["trump", "dave chappelle", "elmer fudd", "bugs bunny"];
        var results = response.data;
 
        for (var i = 0; i < results.length; i++) {
-           console.log("jhkjh")
+           
            if(results[i].rating !== "r" && results[i].rating !== "pg-13") {
                var gifDiv = $("<div>");
                var rating = results[i].rating;
                var p = $("<p>").text("Rating: " + rating);
                var gifImage = $("<img>");
+               gifImage.addClass("giphyJiffy");
+
 
                gifImage.attr("src", results[i].images.fixed_height.url);
+               gifImage.attr("data-state", "animate");
+               
+               
                gifDiv.append(p);
                gifDiv.append(gifImage);
                
                $("#gifs-view").prepend(gifDiv);
+                /*   gifImage.on('click', function() {
+                       $(this).attr("src", results[i].images.fixed_hight_still.url);
+                   })
+                */   
                console.log(response);
-           }
-       }
-    });
-    }
-
-    function renderButtomns() {
-        $("#buttons-view").empty();
-        $("#gif-input").val("");
-
-        for (var i = 0; i < gifs.length; i++) {
-           
-            //generate buttons for each in the array.
-            //create button 
-            var a = $("<button>");
-            //add class to the newlyMadeButton
-            a.addClass("gif");
-            //add the data attribute
-            a.attr("data-gif", gifs[i]);
-            //provides initial buttons' text
-            a.text(gifs[i]);
-            //add buttons to buttons-view div
-            $("#buttons-view").append(a);
+            }
         }
-    }
+    });
+}
 
-    //handles events when buttons is clicked
-    $("#add-gif").on('click', function(event) {
-        event.preventDefault();
+
+function renderButtomns() {
+    $("#buttons-view").empty();
+    $("#gif-input").val("");
+    
+    for (var i = 0; i < gifs.length; i++) {
         
-        //grab input from text input
-        var gif = $("#gif-input").val().trim();
+        //generate buttons for each in the array.
+        //create button 
+        var a = $("<button>");
+        //add class to the newlyMadeButton
+        a.addClass("gif");
+        //add the data attribute
+        a.attr("data-gif", gifs[i]);
+        //provides initial buttons' text
+        a.text(gifs[i]);
+        //add buttons to buttons-view div
+        $("#buttons-view").append(a);
+    }
+}
 
-        //add movie from textbox to array
-        gifs.push(gif);
-        console.log(gifs);
+//handles events when buttons is clicked
+$("#add-gif").on('click', function(event) {
+    event.preventDefault();
+    
+    //grab input from text input
+    var gif = $("#gif-input").val().trim();
+    
+    //add  from textbox to array
+    gifs.push(gif);
+    console.log(gifs);
+    
+    //call render buttons fn
+    renderButtomns();
+})
 
-        //call render buttons fn
-        renderButtomns();
-    })
 
-    //function that handles displaying gifs
+//function to pause/play gifs::
+
+
+$(document).on('click', ".giphyJiffy", function() {
+    var state = $(this).data("state");
+    //var aniGif = $("<img>");
+    console.log(state);
+    
+    
+    
+
+
+
+
+
+
+   /*
+    gifImage.attr("src", results[i].images.fixed_height_still.url);
+    gifImage.attr("data-state", "still");
+    */
+});
+
+//function that handles displaying gifs
     $(document).on('click', ".gif", displayGifs);
-
+    
     //call on renderbuttons fucntion
     renderButtomns();
-
-    //function that handles pause and play of gifs
-    //** set up f(n) for pausing gifs */
-    $(".gif").on('click', function(pause) {
-       /*
-        var state = $(this).attr("data-state");
-        if (state === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this.attr("data-state", "animate"));
-        } else {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-still", "still");
-        }
-        */
-    })
-
+    
+    
+    
 })
+
+
+
+
+
+/*
+        if (state === "still") {
+            console.log("kjshdkjhskdj")
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "hello");
+            console.log($(this).data("state"))
+        } else {
+            console.log("yo wtf");
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+            console.log("data-state", "still");
+        }
+*/        
